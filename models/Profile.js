@@ -118,4 +118,14 @@ const ProfileSchema = new Schema({
 
 const Profile = mongoose.model('profile', ProfileSchema);
 
+Profile.getUserProfileById = async id => {
+    const userProfile = await Profile.findOne({
+        user: id
+    });
+
+    if(!userProfile) return null;
+
+    return user;
+};
+
 module.exports = Profile;

@@ -128,4 +128,40 @@ Profile.getUserProfileById = async id => {
     return user;
 };
 
+Profile.updateProfile = async (id, newData) => {
+    return await Profile.findOneAndUpdate({
+        user: id
+    }, {
+        $set: newData
+    }, {
+        new: true
+    });
+};
+
+Profile.createNewProfile = async (data) => {
+    const returnValue = {
+        errors: {},
+        profile: null
+    };
+
+    const wrongProfile = await Profile.findOne({
+        handle: data.handle
+    });
+
+    if(wrongProfile) {
+        returnValue.errors.handle = 'That handle already exists';
+        return returnValue
+    }
+
+    let profile = new Profile(data);
+
+    profile = await profile.save();
+
+    returnValue.profile = profile;
+    returnValue.errors = null;
+
+    return returnValue
+
+};
+
 module.exports = Profile;

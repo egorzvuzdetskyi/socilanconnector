@@ -121,9 +121,10 @@ const Profile = mongoose.model('profile', ProfileSchema);
 Profile.getUserProfileById = async id => {
     const userProfile = await Profile.findOne({
         user: id
-    });
+    })
+        .populate('user', ['name', 'avatar']);
 
-    if(!userProfile) return null;
+    if (!userProfile) return null;
 
     return userProfile;
 };
@@ -148,7 +149,7 @@ Profile.createNewProfile = async (data) => {
         handle: data.handle
     });
 
-    if(wrongProfile) {
+    if (wrongProfile) {
         returnValue.errors.handle = 'That handle already exists';
         return returnValue
     }

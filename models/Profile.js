@@ -125,7 +125,7 @@ Profile.getUserProfileById = async id => {
 
     if(!userProfile) return null;
 
-    return user;
+    return userProfile;
 };
 
 Profile.updateProfile = async (id, newData) => {

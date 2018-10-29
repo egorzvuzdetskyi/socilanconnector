@@ -4,7 +4,8 @@ const express = require("express"),
     passport = require('passport'),
     Profile = require('../../models/Profile'),
     User = require('../../models/User'),
-    asyncMiddleware = require('../../middleware/asyncMiddleware');
+    asyncMiddleware = require('../../middleware/asyncMiddleware'),
+    validateProfileInput = require('../../validation/profile');
 
 // @route       GET /api/profile/test
 // @desc        Tests users route
@@ -33,7 +34,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), asyncMiddlewar
 // @route       POST /api/profile
 // @desc        Create users profile
 // @access      Private
-router.get('/', passport.authenticate('jwt', { session: false }), asyncMiddleware(async (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), asyncMiddleware(async (req, res) => {
     const profileFields = {},
         {
             handle,
@@ -50,7 +51,15 @@ router.get('/', passport.authenticate('jwt', { session: false }), asyncMiddlewar
             instagram,
             twitter
         } = req.body,
-        errors = {};
+        {
+            errors,
+            isValid
+        } = validateProfileInput(req.body);
+
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
     profileFields.user = req.user.id;
 
     if(handle) profileFields.handle = handle;
@@ -83,7 +92,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), asyncMiddlewar
     }
 
     const newProfile = await Profile.updateProfile(req.user.id, profileFields);
-    return res.json(newProfile.profile);
+    return res.json(newProfile);
 }));
 
 module.exports = router;

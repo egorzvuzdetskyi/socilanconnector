@@ -76,7 +76,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), asyncMiddlewar
         const newProfile = await Profile.createNewProfile(profileFields);
         if(newProfile.errors) {
             errors.handle = newProfile.errors.handle;
-            res.status(400).json(errors);
+            return res.status(400).json(errors);
         }
 
         return res.json(newProfile.profile);

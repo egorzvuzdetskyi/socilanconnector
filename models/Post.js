@@ -54,4 +54,17 @@ const PostSchema = new Schema({
 
 const Post = mongoose.model('post', PostSchema);
 
+Post.getAllPosts = async () => {
+    return await Post.find()
+        .sort({
+            date: -1
+        })
+};
+
+Post.getPostById = async id => {
+    return await Post.findOne({
+        _id: id
+    })
+}
+
 module.exports = Post;

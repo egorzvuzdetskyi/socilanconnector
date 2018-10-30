@@ -43,4 +43,10 @@ User.hashPassword = async passwordToHash => {
     return await bcrypt.hash(passwordToHash, salt);
 };
 
+User.deleteUser = async id => {
+    return await User.findOneAndRemove({
+        _id: id
+    });
+}
+
 module.exports = User;

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    isEmpty = require('../validation/is-empty'),
+    User = require('./User');
 
 //Create schema
 const ProfileSchema = new Schema({
@@ -129,6 +131,26 @@ Profile.getUserProfileById = async id => {
     return userProfile;
 };
 
+Profile.getUserProfileByHandle = async handle => {
+    const profile = await Profile.findOne({
+        handle
+    })
+        .populate('user', ['name', 'avatar']);
+
+    if (!profile) return null;
+
+    return profile;
+};
+
+Profile.getAll = async () => {
+    const profiles = await Profile.find()
+        .populate('user', ['name', 'avatar']);
+
+    if (isEmpty(profiles)) return null;
+
+    return profiles;
+};
+
 Profile.updateProfile = async (id, newData) => {
     return await Profile.findOneAndUpdate({
         user: id
@@ -163,6 +185,19 @@ Profile.createNewProfile = async (data) => {
 
     return returnValue
 
+};
+
+Profile.deleteProfile = async user_id => {
+    return await Profile.findOneAndRemove({
+        user: user_id
+    })
+};
+
+Profile.deleteProfileAndUser = async user_id => {
+    return await Promise.all([
+        User.deleteUser(user_id),
+        Profile.deleteProfile(user_id)
+    ])
 };
 
 module.exports = Profile;

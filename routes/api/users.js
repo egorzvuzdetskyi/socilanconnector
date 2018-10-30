@@ -13,7 +13,7 @@ const express = require("express"),
 // @desc        Register users route
 // @access      Public
 router.post("/register", asyncMiddleware(async (req, res) => {
-        const {email, password, name} = req.body;
+        const {email, password, name, password2} = req.body;
 
         const {
             errors,
@@ -21,6 +21,7 @@ router.post("/register", asyncMiddleware(async (req, res) => {
         } = validateRegisterUser({
             email,
             password,
+            password2,
             name
         });
 

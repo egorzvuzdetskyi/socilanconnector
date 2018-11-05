@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import classnames from 'classnames';
+import {connect} from "react-redux";
+import {registerUser} from "../../actions/authActions";
+import {PropTypes} from 'prop-types';
+import {withRouter} from "react-router-dom";
 
 class Register extends Component {
 
@@ -17,7 +20,7 @@ class Register extends Component {
 
     onChange = (e) => {
         this.setState({
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         });
     };
 
@@ -28,15 +31,15 @@ class Register extends Component {
             ...this.state
         };
 
-        axios.post('/api/users/register', newUser)
-            .then(user => {
-                console.log(user);
+        this.props.registerUser(newUser, this.props.history);
+    };
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
             })
-            .catch(error => {
-                this.setState({
-                    errors: error.response.data
-                })
-            })
+        }
     };
 
     render() {
@@ -44,8 +47,6 @@ class Register extends Component {
         const {
             errors
         } = this.state;
-
-
 
         return (
             <div className="register">
@@ -59,8 +60,8 @@ class Register extends Component {
                                     <input type="text"
                                            className={
                                                classnames('form-control form-control-lg', {
-                                               'is-invalid': errors.name
-                                           })}
+                                                   'is-invalid': errors.name
+                                               })}
                                            placeholder="Name"
                                            name="name"
                                            value={this.state.name}
@@ -78,7 +79,7 @@ class Register extends Component {
                                            value={this.state.email}
                                            onChange={this.onChange}
                                            name="email"/>
-                                    {errors.name && (<div className="invalid-feedback">{errors.email}</div>)}
+                                    {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                                     <small className="form-text text-muted">
                                         This site uses Gravatar so if you want a
                                         profile image, use a Gravatar email
@@ -94,7 +95,7 @@ class Register extends Component {
                                            value={this.state.password}
                                            onChange={this.onChange}
                                            name="password"/>
-                                    {errors.name && (<div className="invalid-feedback">{errors.password}</div>)}
+                                    {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                                 </div>
                                 <div className="form-group">
                                     <input type="password"
@@ -107,7 +108,7 @@ class Register extends Component {
                                            value={this.state.password2}
                                            onChange={this.onChange}
                                            name="password2"/>
-                                    {errors.name && (<div className="invalid-feedback">{errors.password2}</div>)}
+                                    {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
                                 </div>
                                 <input type="submit" className="btn btn-info btn-block mt-4"/>
                             </form>
@@ -119,4 +120,20 @@ class Register extends Component {
     }
 }
 
-export default Register;
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    {
+        registerUser
+    }
+)(withRouter(Register));

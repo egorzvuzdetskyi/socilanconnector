@@ -19,7 +19,7 @@ import store from './store';
 
 //own functions
 import {getLocalStorageName, isTokenExpired, setAuthToken} from "./helpers";
-import {setCurrentUser} from "./actions/authActions";
+import {logoutUser, setCurrentUser} from "./actions/authActions";
 
 if(localStorage.getItem(getLocalStorageName('token'))) {
 

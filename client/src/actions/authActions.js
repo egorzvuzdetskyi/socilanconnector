@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import {GET_ERRORS, SET_CURRENT_USER} from "./types";
 import {
     setAuthToken,
     getLocalStorageName
@@ -45,9 +45,15 @@ export const loginUser = (userData) => dispatch => {
         );
 };
 
+export const logoutUser = () => dispatch => {
+    localStorage.removeItem(getLocalStorageName('token'));
+    setAuthToken(false);
+    dispatch(setCurrentUser({ }));
+};
+
 export const setCurrentUser = decoded => {
     return {
         type: SET_CURRENT_USER,
         payload: decoded
     }
-}
+};

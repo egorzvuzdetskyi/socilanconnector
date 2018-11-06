@@ -18,7 +18,7 @@ import Login from "./components/auth/Login";
 import store from './store';
 
 //own functions
-import {getLocalStorageName, setAuthToken} from "./helpers";
+import {getLocalStorageName, isTokenExpired, setAuthToken} from "./helpers";
 import {setCurrentUser} from "./actions/authActions";
 
 if(localStorage.getItem(getLocalStorageName('token'))) {
@@ -31,6 +31,11 @@ if(localStorage.getItem(getLocalStorageName('token'))) {
 
     store.dispatch(setCurrentUser(decoded));
 
+    if(isTokenExpired(decoded)) {
+        store.dispatch(logoutUser());
+
+        window.location.href = '/login'
+    }
 }
 
 class App extends Component {

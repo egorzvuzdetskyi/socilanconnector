@@ -4,6 +4,8 @@ import "./App.css";
 //libraries
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import jwt_decode from 'jwt-decode';
+
 
 // components
 import Navbar from "./components/layout/Navbar";
@@ -14,6 +16,22 @@ import Login from "./components/auth/Login";
 
 // store
 import store from './store';
+
+//own functions
+import {getLocalStorageName, setAuthToken} from "./helpers";
+import {setCurrentUser} from "./actions/authActions";
+
+if(localStorage.getItem(getLocalStorageName('token'))) {
+
+    const token = localStorage.getItem(getLocalStorageName('token'));
+
+    setAuthToken(token);
+
+    const decoded = jwt_decode(token);
+
+    store.dispatch(setCurrentUser(decoded));
+
+}
 
 class App extends Component {
     render() {

@@ -15,7 +15,7 @@ const TextFieldGroup = ({
                         }) => {
     return (
         <div className="form-group">
-            <input type="email"
+            <input type={type}
                    className={
                        classnames('form-control form-control-lg', {
                            'is-invalid': error

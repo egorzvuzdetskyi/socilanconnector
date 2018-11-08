@@ -13,6 +13,7 @@ import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Dashboard from "./components/dashboard/Dashboard"
 
 // store
 import store from './store';
@@ -20,6 +21,7 @@ import store from './store';
 //own functions
 import {getLocalStorageName, isTokenExpired, setAuthToken} from "./helpers";
 import {logoutUser, setCurrentUser} from "./actions/authActions";
+import {clearProfile} from "./actions/profileActions";
 
 if(localStorage.getItem(getLocalStorageName('token'))) {
 
@@ -32,6 +34,7 @@ if(localStorage.getItem(getLocalStorageName('token'))) {
     store.dispatch(setCurrentUser(decoded));
 
     if(isTokenExpired(decoded)) {
+        store.dispatch(clearProfile());
         store.dispatch(logoutUser());
 
         window.location.href = '/login'
@@ -49,6 +52,7 @@ class App extends Component {
                         <div className="container">
                             <Route exact path="/register" component={Register}/>
                             <Route exact path="/login" component={Login}/>
+                            <Route exact path="/dashboard" component={Dashboard}/>
                         </div>
                         <Footer />
                     </div>

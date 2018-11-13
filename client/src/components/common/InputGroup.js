@@ -27,7 +27,7 @@ const InputGroup = ({
                       value={value}
                       onChange={onChange}
                       name={name}/>
-            {info && <small className="form-text text-muted">{info}</small>}
+            {/*{info && <small className="form-text text-muted">{info}</small>}*/}
             {error && (<div className="invalid-feedback">{error}</div>)}
         </div>
     )

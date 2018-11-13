@@ -3,7 +3,9 @@ import {connect} from "react-redux";
 import {registerUser} from "../../actions/authActions";
 import {PropTypes} from 'prop-types';
 import {withRouter} from "react-router-dom";
-import TextFieldGroup from "../common/TextFieldGroup";
+import {
+    TextFieldGroup,
+} from "../common/index";
 
 class Register extends Component {
 

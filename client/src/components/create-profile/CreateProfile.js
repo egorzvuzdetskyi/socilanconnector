@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {connect} from "react-redux";
-import TextFieldGroup from "../common/TextFieldGroup";
-import SelectListGroup from "../common/SelectListGroup";
-import InputGroup from "../common/InputGroup";
-import TextAreaGroup from "../common/TextAreaField";
+import {
+    TextFieldGroup,
+    SelectListGroup,
+    InputGroup,
+    TextAreaGroup
+} from "../common/index";
 import {createOrUpdateProfile} from "../../actions/profileActions";
 import {withRouter} from "react-router-dom";
 

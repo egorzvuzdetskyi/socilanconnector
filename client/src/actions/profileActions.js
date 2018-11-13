@@ -56,8 +56,8 @@ export const deleteAccount = () => dispatch => {
         })
 };
 
-export const createProfile = (profileData, history) => dispatch => {
-    console.log(profileData)
+export const createOrUpdateProfile = (profileData, history) => dispatch => {
+    // should be separate into different methods. on server side also.
     axios
         .post('/api/profile', profileData)
         .then(res => history.push('/dashboard'))

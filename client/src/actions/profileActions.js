@@ -34,3 +34,17 @@ export const clearProfile = () => {
         type: CLEAR_CURRENT_PROFILE
     };
 };
+
+export const createProfile = (profileData, history) => dispatch => {
+    console.log(profileData)
+    axios
+        .post('/api/profile', profileData)
+        .then(res => history.push('/dashboard'))
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        });
+};

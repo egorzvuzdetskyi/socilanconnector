@@ -5,6 +5,8 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import InputGroup from "../common/InputGroup";
 import TextAreaGroup from "../common/TextAreaField";
+import {createProfile} from "../../actions/profileActions";
+import {withRouter} from "react-router-dom";
 
 class CreateProfile extends Component {
 
@@ -38,7 +40,31 @@ class CreateProfile extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        console.log(this.state);
+        const profileData = {
+            handle: this.state.handle,
+            company: this.state.company,
+            website: this.state.website,
+            location: this.state.location,
+            status: this.state.status,
+            skills: this.state.skills,
+            githubUsername: this.state.githubUsername,
+            bio: this.state.bio,
+            twitter: this.state.twitter,
+            facebook: this.state.facebook,
+            linkedin: this.state.linkedin,
+            youtube: this.state.youtube,
+            instagram: this.state.instagram,
+        };
+
+        this.props.createProfile(profileData, this.props.history);
+    };
+
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
     };
 
     render() {
@@ -191,6 +217,7 @@ class CreateProfile extends Component {
                                                 displaySocialInputs: !prevState.displaySocialInputs
                                             }))
                                         }}
+                                        type="button"
                                         className="btn btn-light">
                                         Add social network links
                                     </button>
@@ -222,4 +249,6 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(
+    withRouter(CreateProfile)
+);

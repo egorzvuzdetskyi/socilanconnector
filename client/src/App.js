@@ -5,6 +5,9 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
 
 
 // components
@@ -24,6 +27,8 @@ import store from './store';
 import {getLocalStorageName, isTokenExpired, setAuthToken} from "./helpers";
 import {logoutUser, setCurrentUser} from "./actions/authActions";
 import {clearProfile} from "./actions/profileActions";
+
+library.add(faStroopwafel);
 
 if(localStorage.getItem(getLocalStorageName('token'))) {
 

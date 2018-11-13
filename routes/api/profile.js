@@ -27,7 +27,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), asyncMiddleware(
 
     if (!profile) {
         errors.profile = 'There is no profile for this user';
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
     }
 
     res.json(profile);

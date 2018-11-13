@@ -8,6 +8,7 @@ import {
 } from "../common/index";
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
+import {addExperience} from "../../actions/profileActions";
 
 class AddExperience extends Component {
     constructor(props) {
@@ -28,14 +29,37 @@ class AddExperience extends Component {
 
     onChange = (e) => {
         this.setState({
-            [e.traget.name]: e.traget.value
+            [e.target.name]: e.target.value
         })
     };
 
     onSubmit = (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      console.log('Submit');
+        const expData = this.getValuesOfForm(this.state);
+
+        this.props.addExperience(expData, this.props.history)
+    };
+
+    componentWillReceiveProps = (nextProps) => {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    };
+
+    getValuesOfForm = (state) => {
+
+        const result = {};
+
+        Object.keys(state).forEach(key => {
+            if (key === 'disabled' || key === 'errors') return;
+
+            result[key] = state[key]
+        });
+
+        return result;
     };
 
     onCheck = (e) => {
@@ -121,7 +145,8 @@ class AddExperience extends Component {
 
 AddExperience.propTypes = {
     profile: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    addExperience: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -129,4 +154,6 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(withRouter(AddExperience));
+export default connect(mapStateToProps, {
+    addExperience
+})(withRouter(AddExperience));

@@ -22,14 +22,13 @@ const SelectListGroup = ({
 
     return (
         <div className="form-group">
-            <select type={type}
-                      className={
-                          classnames('form-control form-control-lg', {
-                              'is-invalid': error
-                          })}
-                      value={value}
-                      onChange={onChange}
-                      name={name}>
+            <select className={
+                classnames('form-control form-control-lg', {
+                    'is-invalid': error
+                })}
+                    value={value}
+                    onChange={onChange}
+                    name={name}>
                 {selectOptions}
             </select>
             {info && <small className="form-text text-muted">{info}</small>}

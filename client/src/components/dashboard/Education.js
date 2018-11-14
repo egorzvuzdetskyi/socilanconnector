@@ -17,9 +17,8 @@ class Education extends Component {
         this.props.deleteEducation(id, this.props.history);
     };
 
-    render() {
-
-        const education = this.props.education.map(edu => (
+    getViewForTable = (education) => {
+        education.map(edu => (
             <tr key={edu._id}>
                 <td>{edu.school}</td>
                 <td>{edu.degree}</td>
@@ -30,6 +29,13 @@ class Education extends Component {
                 <td><button onClick={this.onDeleteClick.bind(null, edu._id)} className="btn btn-danger">Delete</button></td>
             </tr>
         ));
+    }
+
+    render() {
+
+        let education;
+
+        if(this.props.education.length > 0) education = this.getViewForTable(this.props.education);
 
         return(
             <div>

@@ -45,10 +45,14 @@ class Register extends Component {
     };
 
     componentDidMount() {
+        this.checkIsAuthenticated();
+    }
+
+    checkIsAuthenticated = () => {
         if (this.props.auth.isAuthenticated) {
             this.props.history.push('/dashboard');
         }
-    }
+    };
 
     render() {
 

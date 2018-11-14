@@ -42,23 +42,21 @@ class CreateProfile extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        const profileData = {
-            handle: this.state.handle,
-            company: this.state.company,
-            website: this.state.website,
-            location: this.state.location,
-            status: this.state.status,
-            skills: this.state.skills,
-            githubUsername: this.state.githubUsername,
-            bio: this.state.bio,
-            twitter: this.state.twitter,
-            facebook: this.state.facebook,
-            linkedin: this.state.linkedin,
-            youtube: this.state.youtube,
-            instagram: this.state.instagram,
-        };
+        const profileData = this.getValuesOfForm(this.state);
 
         this.props.createOrUpdateProfile(profileData, this.props.history);
+    };
+
+    getValuesOfForm = (form) => {
+        const result = {};
+
+        Object.keys(form).forEach(key => {
+            if(key === 'errors' || key === 'displaySocialInputs') return
+
+            result[key] = form[key]
+        });
+
+        return result
     };
 
     componentWillReceiveProps = (nextProps) => {

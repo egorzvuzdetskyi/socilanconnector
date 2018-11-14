@@ -18,17 +18,19 @@ class Education extends Component {
     };
 
     getViewForTable = (education) => {
-        education.map(edu => (
+        const result = education.map(edu => (
             <tr key={edu._id}>
                 <td>{edu.school}</td>
                 <td>{edu.degree}</td>
                 <td>
                     <Moment format="YYYY/MM/DD">{edu.from}</Moment> -
-                    {edu.to === null ? (' Now') : <Moment fomat="YYYY/MM/DD"> {edu.to}</Moment>}
+                    {edu.to === null ? (' Now') : <Moment format="YYYY/MM/DD">{edu.to}</Moment>}
                 </td>
                 <td><button onClick={this.onDeleteClick.bind(null, edu._id)} className="btn btn-danger">Delete</button></td>
             </tr>
         ));
+
+        return result;
     }
 
     render() {

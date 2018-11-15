@@ -33,6 +33,11 @@ class Navbar extends Component {
                     </Link>
                 </li>
                 <li className="nav-item">
+                    <Link className="nav-link" to="/dashboard">
+                        Feed
+                    </Link>
+                </li>
+                <li className="nav-item">
                     <a onClick={this.onLogoutClick} className="nav-link">Logout
                         <img src={user.avatar}
                              alt={user.name}

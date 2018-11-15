@@ -15,7 +15,7 @@ class ProfileHeader extends Component {
     render() {
         const {
             profile
-        } = this.props.profile;
+        } = this.props;
 
         return (
             <div className="profileHeader">
@@ -110,11 +110,4 @@ class ProfileHeader extends Component {
     }
 }
 
-ProfileHeader.propTypes = {
-};
-
-const mapStateToProps = state => ({
-    profile: state.profile
-});
-
-export default connect(mapStateToProps)(withRouter(ProfileHeader));
+export default ProfileHeader;

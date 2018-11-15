@@ -106,10 +106,4 @@ class ProfileCreds extends Component {
     }
 }
 
-ProfileCreds.propTypes = {};
-
-const mapStateToProps = state => ({
-    profile: state.profile
-})
-
-export default connect(mapStateToProps)(withRouter(ProfileCreds));
+export default ProfileCreds;

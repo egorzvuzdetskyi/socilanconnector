@@ -8,10 +8,11 @@ import {
 import {
     getProfiles
 } from '../../actions/profileActions'
+import ProfileItem from "./ProfileItem";
 
 class Profiles extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
@@ -27,21 +28,21 @@ class Profiles extends Component {
         } = this.props.profile;
         let profileItems;
 
-        if(profiles === null || loading){
+        if (profiles === null || loading) {
             profileItems = <Spinner/>
         } else {
-            if(profiles.length > 0) {
-                profileItems = <h1>Profiles here</h1>
+            if (profiles.length > 0) {
+                profileItems = profiles.map(profile => (<ProfileItem profile={profile} key={profile._id}/>))
             } else {
                 profileItems = <h4>No profiles found...</h4>
             }
         }
 
-        return(
+        return (
             <div className="profiles">
                 <div className="container">
                     <div className="row">
-                        <col-md-12>
+                        <div className="col-md-12">
                             <h1 className="display-4 text-center">
                                 People profiles
                             </h1>
@@ -49,7 +50,7 @@ class Profiles extends Component {
                                 Browse and connect with people
                             </p>
                             {profileItems}
-                        </col-md-12>
+                        </div>
                     </div>
                 </div>
             </div>

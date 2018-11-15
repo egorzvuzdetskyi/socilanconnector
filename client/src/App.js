@@ -22,6 +22,8 @@ import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-credentials/AddExperience";
 import AddEducation from "./components/add-credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
 
 // store
 import store from './store';
@@ -30,7 +32,6 @@ import store from './store';
 import {getLocalStorageName, isTokenExpired, setAuthToken} from "./helpers";
 import {logoutUser, setCurrentUser} from "./actions/authActions";
 import {clearProfile} from "./actions/profileActions";
-import Profiles from "./components/profiles/Profiles";
 
 library.add(faStroopwafel);
 
@@ -80,6 +81,9 @@ class App extends Component {
                             </Switch>
                             <Switch>
                                 <PrivateRoutes exact path="/profiles" component={Profiles}/>
+                            </Switch>
+                            <Switch>
+                                <PrivateRoutes exact path="/profile/:handle" component={Profile}/>
                             </Switch>
                         </div>
                         <Footer />

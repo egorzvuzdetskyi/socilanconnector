@@ -29,10 +29,6 @@ img {
     opacity: 0.9;
 }
 
-.post-form{
-    width: 100%;
-}
-
 .latest-profiles-img {
     width: 40px;
     height: 40px;
@@ -41,4 +37,6 @@ img {
 .form-control::placeholder {
     color: #bbb !important;
 }
-
+.full-width{
+    width: 100%;
+}

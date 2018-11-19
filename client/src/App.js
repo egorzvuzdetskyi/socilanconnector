@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import "./App.css";
 
 //libraries
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Provider} from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faStroopwafel} from '@fortawesome/free-solid-svg-icons'
 
 
 // components
@@ -25,6 +25,7 @@ import AddEducation from "./components/add-credentials/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
+import Post from './components/post/Post';
 
 // store
 import store from './store';
@@ -36,7 +37,7 @@ import {clearProfile} from "./actions/profileActions";
 
 library.add(faStroopwafel);
 
-if(localStorage.getItem(getLocalStorageName('token'))) {
+if (localStorage.getItem(getLocalStorageName('token'))) {
 
     const token = localStorage.getItem(getLocalStorageName('token'));
 
@@ -46,7 +47,7 @@ if(localStorage.getItem(getLocalStorageName('token'))) {
 
     store.dispatch(setCurrentUser(decoded));
 
-    if(isTokenExpired(decoded)) {
+    if (isTokenExpired(decoded)) {
         store.dispatch(clearProfile());
         store.dispatch(logoutUser());
 
@@ -57,11 +58,11 @@ if(localStorage.getItem(getLocalStorageName('token'))) {
 class App extends Component {
     render() {
         return (
-            <Provider store={ store }>
+            <Provider store={store}>
                 <Router>
                     <div className="App">
-                        <Navbar />
-                        <Route exact path="/" component={Landing} />
+                        <Navbar/>
+                        <Route exact path="/" component={Landing}/>
                         <div className="container">
                             <Route exact path="/register" component={Register}/>
                             <Route exact path="/login" component={Login}/>
@@ -89,8 +90,11 @@ class App extends Component {
                             <Switch>
                                 <PrivateRoutes exact path="/feed" component={Posts}/>
                             </Switch>
+                            <Switch>
+                                <PrivateRoutes exact path="/post/:id" component={Post}/>
+                            </Switch>
                         </div>
-                        <Footer />
+                        <Footer/>
                     </div>
                 </Router>
             </Provider>

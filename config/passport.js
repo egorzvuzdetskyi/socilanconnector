@@ -14,4 +14,4 @@ module.exports = passport => {
 
         return done(null, user);
     }))
-}
+};
